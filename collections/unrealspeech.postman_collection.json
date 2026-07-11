@@ -1,0 +1,78 @@
+{
+  "info": {
+    "name": "Unreal Speech API",
+    "description": "Low-cost, high-scale text-to-speech (TTS) API. Base URL: https://api.v7.unrealspeech.com. All requests require a Bearer API key issued from the dashboard. Endpoints: POST /stream (low-latency HTTP streaming, up to 1,000 chars), POST /speech (synchronous MP3 + timestamps, up to 3,000 chars), POST /synthesisTasks and GET /synthesisTasks (async long-form, up to 500,000 chars). Note: the host version segment has advanced over time (SDK uses api.v6, docs use api.v7).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{apiKey}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.v7.unrealspeech.com", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Speech",
+      "item": [
+        {
+          "name": "Create speech (synchronous)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}" },
+            "url": { "raw": "{{baseUrl}}/speech", "host": ["{{baseUrl}}"], "path": ["speech"] },
+            "description": "Synthesizes up to 3,000 characters and returns an MP3 audio URL plus timestamp URLs."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stream",
+      "item": [
+        {
+          "name": "Stream speech (low latency)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}" },
+            "url": { "raw": "{{baseUrl}}/stream", "host": ["{{baseUrl}}"], "path": ["stream"] },
+            "description": "Synthesizes up to 1,000 characters and streams audio bytes back in the HTTP response (chunked). HTTP streaming, not a WebSocket."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Synthesis Tasks",
+      "item": [
+        {
+          "name": "Create synthesis task (async)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"Text\": \"This is a long-form test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}" },
+            "url": { "raw": "{{baseUrl}}/synthesisTasks", "host": ["{{baseUrl}}"], "path": ["synthesisTasks"] },
+            "description": "Submits up to 500,000 characters and immediately returns a TaskId. Optionally include a CallbackUrl for status webhooks."
+          }
+        },
+        {
+          "name": "Get synthesis task status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/synthesisTasks?TaskId=",
+              "host": ["{{baseUrl}}"],
+              "path": ["synthesisTasks"],
+              "query": [{ "key": "TaskId", "value": "" }]
+            },
+            "description": "Polls the status of a synthesis task by TaskId; returns output audio URI(s) when complete."
+          }
+        }
+      ]
+    }
+  ]
+}

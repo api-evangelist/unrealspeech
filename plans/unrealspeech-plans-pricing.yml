@@ -1,0 +1,209 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Unreal Speech
+providerId: unrealspeech
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Text to Speech
+- TTS
+- Audio
+- Plans
+- Pricing
+description: >-
+  Unreal Speech is a hosted, commercial text-to-speech API billed on a
+  subscription plus per-character basis. A free tier grants roughly 250,000
+  characters per month (about 6 hours of audio). Paid monthly plans bundle a
+  larger monthly character allowance at a progressively lower effective per-
+  character rate, and a custom/enterprise track covers very high volume (1B+
+  characters) with negotiated discounts. Approximately 750 characters equals one
+  minute of audio.
+notes: >-
+  Plan prices and allowances below reflect the published pricing page at the time
+  of review and can change; verify current numbers at
+  https://app.unrealspeech.com/pricing during reconciliation. The Basic plan has
+  been offered with a promotional first-6-months discount (about $4.99/month).
+sources:
+- https://unrealspeech.com/
+- https://app.unrealspeech.com/pricing
+- https://docs.unrealspeech.com/reference/getting-started-with-our-api
+currency: USD
+plans:
+- id: unrealspeech-free
+  name: Free
+  type: free
+  description: >-
+    Free monthly allowance for evaluation and small workloads - about 250,000
+    characters (~6 hours of audio) per month across all endpoints.
+  entries:
+  - label: Included Characters
+    name: free_characters
+    type: usage
+    metric: characters
+    limit: 250000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '0.00'
+    userMultiplied: false
+  elements:
+  - name: All Endpoints
+  - name: All Voices
+- id: unrealspeech-basic
+  name: Basic
+  type: paid
+  description: >-
+    Entry paid plan bundling roughly 3,000,000 characters (~67 hours of audio)
+    per month. Listed at about $49/month, with a promotional first-6-months rate.
+  entries:
+  - label: Monthly Subscription
+    name: basic_subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '49.00'
+    userMultiplied: false
+  - label: Included Characters
+    name: basic_characters
+    type: usage
+    metric: characters
+    limit: 3000000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in subscription
+    userMultiplied: false
+  elements:
+  - name: All Endpoints
+  - name: All Voices
+- id: unrealspeech-plus
+  name: Plus
+  type: paid
+  description: >-
+    Mid-tier paid plan bundling roughly 42,000,000 characters (~933 hours of
+    audio) per month at about $499/month.
+  entries:
+  - label: Monthly Subscription
+    name: plus_subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '499.00'
+    userMultiplied: false
+  - label: Included Characters
+    name: plus_characters
+    type: usage
+    metric: characters
+    limit: 42000000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in subscription
+    userMultiplied: false
+  elements:
+  - name: All Endpoints
+  - name: All Voices
+- id: unrealspeech-pro
+  name: Pro
+  type: paid
+  description: >-
+    High-volume paid plan bundling roughly 150,000,000 characters (~3,000 hours
+    of audio) per month at about $1,499/month.
+  entries:
+  - label: Monthly Subscription
+    name: pro_subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '1499.00'
+    userMultiplied: false
+  - label: Included Characters
+    name: pro_characters
+    type: usage
+    metric: characters
+    limit: 150000000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in subscription
+    userMultiplied: false
+  elements:
+  - name: All Endpoints
+  - name: All Voices
+  - name: Higher Rate Limits
+- id: unrealspeech-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Enterprise plan bundling roughly 625,000,000 characters (~14,000 hours of
+    audio) per month at about $4,999/month, with additional usage typically
+    billed around $8 per 1,000,000 characters.
+  entries:
+  - label: Monthly Subscription
+    name: enterprise_subscription
+    type: flat
+    metric: subscription
+    limit: 1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '4999.00'
+    userMultiplied: false
+  - label: Included Characters
+    name: enterprise_characters
+    type: usage
+    metric: characters
+    limit: 625000000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included in subscription
+    userMultiplied: false
+  - label: Overage Characters
+    name: enterprise_overage
+    type: usage
+    metric: characters
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1000000
+    price: '8.00'
+    userMultiplied: false
+  elements:
+  - name: All Endpoints
+  - name: All Voices
+  - name: Overage Billing
+- id: unrealspeech-custom
+  name: Custom
+  type: enterprise
+  description: >-
+    Custom track for very high volume (1,000,000,000+ characters per month) with
+    negotiated volume discounts and terms. Contact Unreal Speech.
+  entries:
+  - label: Custom Agreement
+    name: custom
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Volume Discounts
+  - name: Custom Terms
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

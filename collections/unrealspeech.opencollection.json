@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unreal Speech API",
+    "version": "v7"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{apiKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Speech",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create speech (synchronous).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v7.unrealspeech.com/speech",
+            "body": { "type": "json", "data": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}" }
+          },
+          "docs": "Synthesizes up to 3,000 characters and returns an MP3 audio URL plus timestamp URLs."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stream",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Stream speech (low latency).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v7.unrealspeech.com/stream",
+            "body": { "type": "json", "data": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}" }
+          },
+          "docs": "Synthesizes up to 1,000 characters and streams audio bytes back in the HTTP response (chunked). HTTP streaming, not a WebSocket."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Synthesis Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": { "name": "Create synthesis task (async).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v7.unrealspeech.com/synthesisTasks",
+            "body": { "type": "json", "data": "{\n  \"Text\": \"This is a long-form test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}" }
+          },
+          "docs": "Submits up to 500,000 characters and immediately returns a TaskId. Optionally include a CallbackUrl for status webhooks."
+        },
+        {
+          "info": { "name": "Get synthesis task status.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v7.unrealspeech.com/synthesisTasks?TaskId=",
+            "params": [
+              { "name": "TaskId", "value": "", "type": "query", "description": "The identifier returned when the task was created." }
+            ]
+          },
+          "docs": "Polls the status of a synthesis task by TaskId; returns output audio URI(s) when complete."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

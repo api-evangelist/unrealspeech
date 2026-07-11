@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Unreal Speech
+providerId: unrealspeech
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Text to Speech
+- TTS
+- Audio
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Unreal Speech spend. Unreal Speech is a hosted, commercial
+  text-to-speech API with no self-hosted option, so all cost is a vendor invoice.
+  Billing combines a monthly subscription tier with a per-character consumption
+  meter: each plan bundles an included monthly character allowance, and volume
+  beyond it is billed as overage (about $8 per 1,000,000 characters at enterprise
+  scale) or absorbed by moving to a higher tier. A free allowance (~250K
+  characters/month) covers evaluation. Roughly 750 characters equals one minute
+  of synthesized audio, so cost tracks closely to minutes/hours of audio
+  produced.
+notes: >-
+  Per-unit overage rates and plan allowances reflect the published pricing page
+  at the time of review and can change; verify at
+  https://app.unrealspeech.com/pricing during reconciliation.
+sources:
+- https://unrealspeech.com/
+- https://app.unrealspeech.com/pricing
+- https://docs.unrealspeech.com/reference/getting-started-with-our-api
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Unreal Speech
+serviceCategory: AI and Machine Learning
+billingModel:
+  pricingCategory: Subscription plus Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Unreal Speech
+  ServiceCategory: AI and Machine Learning
+  ProviderName: Unreal Speech
+  PublisherName: Unreal Speech
+  InvoiceIssuerName: Unreal Speech
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: characters_synthesized
+  description: Characters of text synthesized to speech, metered monthly against the plan allowance and billed as overage beyond it.
+  unit: characters
+  aggregation: sum
+  dimensions:
+  - account
+  - endpoint
+  - voice
+- name: plan_subscription
+  description: Fixed monthly subscription fee for the selected plan tier.
+  unit: subscription
+  aggregation: sum
+  dimensions:
+  - account
+- name: overage_characters
+  description: Characters synthesized beyond the plan's included monthly allowance, billed per million.
+  unit: characters
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track characters synthesized per endpoint and voice; convert to minutes of audio (~750 characters per minute) to relate spend to output.
+- name: Allocation
+  description: Attribute character consumption to workloads or teams by API key/account so TTS spend maps to internal cost centers.
+- name: Optimization
+  description: Right-size the plan tier to actual monthly character volume; use /synthesisTasks for long-form to batch cost-effectively; trim or cache repeated text to avoid re-synthesizing the same content; select bitrate no higher than needed.
+- name: Accountability
+  description: Assign an owner per account/key and review monthly character usage against the plan allowance to avoid overage surprises.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,78 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Unreal Speech
+providerId: unrealspeech
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Text to Speech
+- TTS
+- Rate Limiting
+- Quotas
+description: >-
+  Unreal Speech enforces two kinds of limits. A per-second request-rate limit is
+  tied to the account's plan tier (documented as roughly 2 requests/second on the
+  free tier, 8 requests/second on Basic, and 32 requests/second on Pro-class
+  plans). Separately, monthly consumption is metered by synthesized characters
+  against the plan's included allowance, with overage or a plan upgrade required
+  beyond it. Per-request payload is also bounded by endpoint: up to 1,000
+  characters on /stream, up to 3,000 on /speech, and up to 500,000 on
+  /synthesisTasks.
+notes: >-
+  The per-second request-rate figures reflect documented plan tiers at the time
+  of review and may be adjusted per plan; confirm current values in the API
+  reference and pricing page during reconciliation. Requests over the rate limit
+  should be retried with exponential backoff.
+sources:
+- https://docs.unrealspeech.com/reference/getting-started-with-our-api
+- https://app.unrealspeech.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Free Tier Request Rate
+  scope: account
+  metric: requests
+  limit: 2 per second
+  notes: Documented request-rate ceiling on the free plan.
+- name: Basic Tier Request Rate
+  scope: account
+  metric: requests
+  limit: 8 per second
+  notes: Documented request-rate ceiling on the Basic plan.
+- name: Pro Tier Request Rate
+  scope: account
+  metric: requests
+  limit: 32 per second
+  notes: Documented request-rate ceiling on Pro-class plans.
+- name: Monthly Character Allowance
+  scope: account
+  metric: characters
+  limit: per plan
+  notes: Synthesized characters are metered monthly against the plan's included allowance (free ~250K).
+- name: Stream Payload Size
+  scope: request
+  metric: characters
+  limit: 1000
+  notes: Maximum characters per POST /stream request.
+- name: Speech Payload Size
+  scope: request
+  metric: characters
+  limit: 3000
+  notes: Maximum characters per POST /speech request.
+- name: Synthesis Task Payload Size
+  scope: request
+  metric: characters
+  limit: 500000
+  notes: Maximum characters per POST /synthesisTasks request.
+policies:
+- name: Backoff Strategy
+  description: On a 429 response, retry with exponential backoff and jitter rather than hammering the endpoint.
+- name: Endpoint Selection
+  description: Choose the endpoint by text length - /stream for short low-latency text, /speech for medium text, /synthesisTasks for long-form - to stay within per-request payload limits.
+- name: Plan Upgrade
+  description: Sustained higher throughput or larger monthly volume is obtained by moving to a higher plan tier rather than a temporary limit increase.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

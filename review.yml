@@ -1,0 +1,94 @@
+aid: unrealspeech
+name: Unreal Speech
+review:
+  question: Does Unreal Speech expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Unreal Speech's public surface is a small
+    set of request/response REST endpoints over HTTPS. The /stream endpoint does
+    deliver audio incrementally, but it is HTTP chunked streaming of the response
+    body to a single client-initiated POST - not a server-push pub/sub transport.
+    Under the updated API Evangelist scope, HTTP streaming of a POST response
+    (like SSE) could be modeled in AsyncAPI, but /stream carries opaque binary
+    audio rather than a stream of discrete, individually-addressable messages, so
+    no AsyncAPI channel was created. The only asynchronous workflow -
+    /synthesisTasks - is a submit-then-poll (or optional webhook callback)
+    pattern, which is REST plus a webhook, not a streaming transport.
+findings:
+  summary: |
+    Unreal Speech does not publish a documented public WebSocket API. It is a
+    hosted, commercial text-to-speech (TTS) service with a small REST surface
+    under https://api.v7.unrealspeech.com, authenticated with a Bearer API key
+    issued from the dashboard. The three documented endpoints - POST /speech
+    (synchronous MP3 + timestamp URLs, up to 3,000 characters), POST /stream
+    (low-latency HTTP chunked audio streaming, up to 1,000 characters), and
+    POST /synthesisTasks with GET /synthesisTasks (asynchronous long-form audio
+    up to 500,000 characters) - are all request/response REST over HTTPS. The
+    /stream endpoint streams audio bytes back within a single HTTP response
+    (chunked transfer), which is HTTP streaming, not a WebSocket. No realtime,
+    bidirectional, or duplex WebSocket (ws:// or wss://) endpoint is documented
+    for speech synthesis or any other product.
+  websocketNote: |
+    The word "stream" in this API refers to HTTP response streaming (returning
+    audio bytes as they are generated over a standard POST), not the WebSocket
+    protocol. There is no wss:// endpoint, no connection-upgrade handshake, and
+    no bidirectional message channel in the documentation.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.v7.unrealspeech.com
+      documented: true
+      note: All documented endpoints (/speech, /stream, /synthesisTasks) are HTTPS REST with Bearer auth.
+    - protocol: HTTP Streaming
+      scheme: https
+      documented: true
+      note: POST /stream returns audio bytes via HTTP chunked transfer within a single response. Client-initiated, one response body, opaque binary audio. Not WebSocket.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: POST /synthesisTasks accepts an optional CallbackUrl that Unreal Speech posts task status to. Server-to-endpoint HTTP callback, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Unreal Speech API reference as of the review date.
+  endpointsConfirmedRest:
+    - POST https://api.v7.unrealspeech.com/speech
+    - POST https://api.v7.unrealspeech.com/stream
+    - POST https://api.v7.unrealspeech.com/synthesisTasks
+    - GET  https://api.v7.unrealspeech.com/synthesisTasks
+  versioningNote: |
+    The base host carries a version segment that has advanced over time: the
+    published Python SDK references api.v6.unrealspeech.com while the live API
+    reference documents api.v7.unrealspeech.com. The paths are stable across
+    versions. api.v7 is used throughout this entry as the currently-documented host.
+sources:
+  - url: https://docs.unrealspeech.com/
+    type: Documentation
+    note: API reference overview lists the /stream, /speech, and /synthesisTasks endpoints. No WebSocket mentioned.
+  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+    type: Documentation
+    note: Bearer API key auth from the dashboard; guidance on which endpoint to use by text length.
+  - url: https://docs.unrealspeech.com/reference/speech
+    type: APIReference
+    note: POST /speech returns MP3 and timestamp URLs. Synchronous REST.
+  - url: https://docs.unrealspeech.com/reference/stream
+    type: APIReference
+    note: POST /stream returns audio via HTTP chunked streaming (~0.3s). Not WebSocket.
+  - url: https://docs.unrealspeech.com/reference/synthesistasks
+    type: APIReference
+    note: POST /synthesisTasks returns a TaskId; GET /synthesisTasks polls status. Optional CallbackUrl webhook.
+  - url: https://github.com/unrealspeech/unrealspeech
+    type: SourceCode
+    note: Official Python SDK wrapping the same REST endpoints; references api.v6 host. Convenience client, not a self-hostable service.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Unreal Speech's public API is
+    request/response REST plus HTTP response streaming on /stream and an
+    optional webhook callback on /synthesisTasks. No AsyncAPI document was
+    created because there is no server-push pub/sub transport and /stream
+    carries opaque binary audio rather than discrete addressable messages.

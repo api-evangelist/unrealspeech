@@ -1,0 +1,112 @@
+aid: unrealspeech
+url: https://raw.githubusercontent.com/api-evangelist/unrealspeech/refs/heads/main/apis.yml
+name: Unreal Speech
+kind: company
+description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API for
+  turning text into natural-sounding speech. It exposes a small REST surface -
+  a low-latency HTTP streaming endpoint, a synchronous speech endpoint that returns
+  an MP3 plus per-word or per-sentence timestamps, and an asynchronous synthesis
+  tasks endpoint for long-form audio up to 500,000 characters. Requests are
+  authenticated with a Bearer API key issued from the dashboard, and pricing is
+  metered per character with a free monthly allowance.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Text to Speech
+- TTS
+- Speech Synthesis
+- Audio
+- Voice
+- AI
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: unrealspeech:unrealspeech-speech-api
+  name: Unreal Speech Speech API
+  tags:
+  - Text to Speech
+  - Speech Synthesis
+  - Timestamps
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.unrealspeech.com/reference/speech
+  baseURL: https://api.v7.unrealspeech.com
+  properties:
+  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+    type: Documentation
+  - url: https://docs.unrealspeech.com/reference/speech
+    type: APIReference
+  - url: openapi/unrealspeech-openapi.yml
+    type: OpenAPI
+  - url: collections/unrealspeech.postman_collection.json
+    type: PostmanCollection
+  - url: collections/unrealspeech.opencollection.json
+    type: OpenCollection
+  description: Synchronous text-to-speech for medium-length text (up to 3,000
+    characters). Returns an MP3 audio URL plus word- or sentence-level timestamp
+    URLs, with selectable voice, bitrate, speed, and pitch.
+- aid: unrealspeech:unrealspeech-stream-api
+  name: Unreal Speech Stream API
+  tags:
+  - Text to Speech
+  - Streaming
+  - Low Latency
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.unrealspeech.com/reference/stream
+  baseURL: https://api.v7.unrealspeech.com
+  properties:
+  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+    type: Documentation
+  - url: https://docs.unrealspeech.com/reference/stream
+    type: APIReference
+  - url: openapi/unrealspeech-openapi.yml
+    type: OpenAPI
+  - url: collections/unrealspeech.postman_collection.json
+    type: PostmanCollection
+  - url: collections/unrealspeech.opencollection.json
+    type: OpenCollection
+  description: Low-latency HTTP streaming synthesis for short text (up to 1,000
+    characters), returning audio bytes directly in the response - typically in
+    around 0.3 seconds - for time-sensitive uses like chatbots and voice agents.
+    This is HTTP chunked streaming, not a WebSocket.
+- aid: unrealspeech:unrealspeech-synthesis-tasks-api
+  name: Unreal Speech Synthesis Tasks API
+  tags:
+  - Text to Speech
+  - Async
+  - Long Form
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.unrealspeech.com/reference/synthesistasks
+  baseURL: https://api.v7.unrealspeech.com
+  properties:
+  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+    type: Documentation
+  - url: https://docs.unrealspeech.com/reference/synthesistasks
+    type: APIReference
+  - url: openapi/unrealspeech-openapi.yml
+    type: OpenAPI
+  - url: collections/unrealspeech.postman_collection.json
+    type: PostmanCollection
+  - url: collections/unrealspeech.opencollection.json
+    type: OpenCollection
+  description: Asynchronous synthesis for long-form audio (up to 500,000
+    characters, e.g. audiobooks and articles). Submit text and immediately
+    receive a TaskId, then poll the task to retrieve status and the output audio
+    URI(s); supports an optional callback URL.
+common:
+- type: GitHubOrganization
+  url: https://github.com/unrealspeech
+- type: LinkedIn
+  url: https://www.linkedin.com/company/unrealspeech
+- type: Website
+  url: https://unrealspeech.com
+- type: Documentation
+  url: https://docs.unrealspeech.com
+- type: Plans
+  url: plans/unrealspeech-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/unrealspeech-rate-limits.yml
+- type: FinOps
+  url: finops/unrealspeech-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

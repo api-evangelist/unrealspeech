@@ -1,0 +1,300 @@
+openapi: 3.0.3
+info:
+  title: Unreal Speech API
+  description: >-
+    Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes
+    a small REST surface: POST /stream for low-latency HTTP streaming of short
+    text, POST /speech for synchronous MP3 output with word/sentence timestamps,
+    and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous
+    long-form audio. All requests are authenticated with a Bearer API key issued
+    from the dashboard. Note: the base host carries a version segment that has
+    advanced over time (the Python SDK references api.v6, the live reference
+    documents api.v7); paths are stable across versions.
+  version: 'v7'
+  contact:
+    name: Unreal Speech
+    url: https://unrealspeech.com
+  termsOfService: https://unrealspeech.com/terms
+servers:
+  - url: https://api.v7.unrealspeech.com
+    description: Unreal Speech API (documented current host)
+security:
+  - bearerAuth: []
+tags:
+  - name: Speech
+    description: Synchronous text-to-speech returning an MP3 and timestamp URLs.
+  - name: Stream
+    description: Low-latency HTTP streaming synthesis returning audio bytes.
+  - name: Synthesis Tasks
+    description: Asynchronous synthesis for long-form audio via submit-and-poll.
+paths:
+  /speech:
+    post:
+      operationId: createSpeech
+      tags:
+        - Speech
+      summary: Synthesize speech (synchronous)
+      description: >-
+        Converts up to 3,000 characters of text into speech and returns JSON
+        containing an MP3 audio URL plus word- or sentence-level timestamp URLs.
+        Use for medium-length, non-time-critical synthesis.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpeechRequest'
+      responses:
+        '200':
+          description: Synthesis result with audio and timestamp URLs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeechResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /stream:
+    post:
+      operationId: streamSpeech
+      tags:
+        - Stream
+      summary: Stream synthesized audio (low latency)
+      description: >-
+        Converts up to 1,000 characters of text into speech and streams the
+        audio bytes back in the HTTP response (chunked transfer), typically in
+        around 0.3 seconds. Intended for time-sensitive uses such as chatbots and
+        voice agents. This is HTTP response streaming, not a WebSocket.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamRequest'
+      responses:
+        '200':
+          description: Streamed audio content (chunked).
+          headers:
+            Transfer-Encoding:
+              schema:
+                type: string
+              description: chunked
+          content:
+            audio/mpeg:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /synthesisTasks:
+    post:
+      operationId: createSynthesisTask
+      tags:
+        - Synthesis Tasks
+      summary: Create an asynchronous synthesis task
+      description: >-
+        Submits up to 500,000 characters of text for asynchronous synthesis and
+        immediately returns a TaskId. Optimized for long-form audio such as
+        audiobooks and articles. Provide an optional CallbackUrl to be notified
+        of status changes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SynthesisTaskRequest'
+      responses:
+        '200':
+          description: The created synthesis task.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SynthesisTask'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    get:
+      operationId: getSynthesisTask
+      tags:
+        - Synthesis Tasks
+      summary: Get synthesis task status
+      description: >-
+        Polls the status of a previously submitted synthesis task by TaskId.
+        Returns the current status and, when complete, the output audio URI(s).
+      parameters:
+        - name: TaskId
+          in: query
+          required: true
+          description: The identifier returned when the task was created.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The synthesis task and its current status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SynthesisTask'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: No task found for the supplied TaskId.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        API key issued from the Unreal Speech dashboard, sent as
+        Authorization: Bearer <API_KEY>.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
+  schemas:
+    SpeechRequest:
+      type: object
+      required:
+        - Text
+        - VoiceId
+      properties:
+        Text:
+          type: string
+          description: The text to synthesize (up to 3,000 characters).
+          maxLength: 3000
+          example: This is a test.
+        VoiceId:
+          type: string
+          description: The voice to use.
+          enum: [Scarlett, Dan, Liv, Will, Amy]
+          default: Scarlett
+        Bitrate:
+          type: string
+          description: Output audio bitrate.
+          enum: ['320k', '256k', '192k', '128k', '64k', '32k']
+          default: '192k'
+        Speed:
+          type: string
+          description: Playback speed adjustment, from -1.0 (slower) to 1.0 (faster).
+          default: '0'
+        Pitch:
+          type: string
+          description: Voice pitch, from 0.5 to 1.5.
+          default: '1'
+        TimestampType:
+          type: string
+          description: Granularity of the returned timestamps.
+          enum: [word, sentence]
+          default: sentence
+    SpeechResponse:
+      type: object
+      properties:
+        OutputUri:
+          type: string
+          format: uri
+          description: URL to the synthesized MP3 audio file.
+        TimestampsUri:
+          type: string
+          format: uri
+          description: URL to the JSON timestamps file.
+    StreamRequest:
+      type: object
+      required:
+        - Text
+        - VoiceId
+      properties:
+        Text:
+          type: string
+          description: The text to synthesize (up to 1,000 characters).
+          maxLength: 1000
+          example: This is a test.
+        VoiceId:
+          type: string
+          description: The voice to use.
+          enum: [Scarlett, Dan, Liv, Will, Amy]
+          default: Scarlett
+        Bitrate:
+          type: string
+          description: Output audio bitrate.
+          enum: ['320k', '256k', '192k', '128k', '64k', '32k']
+          default: '192k'
+        Speed:
+          type: string
+          description: Playback speed adjustment, from -1.0 (slower) to 1.0 (faster).
+          default: '0'
+        Pitch:
+          type: string
+          description: Voice pitch, from 0.5 to 1.5.
+          default: '1'
+        Codec:
+          type: string
+          description: Audio codec for the streamed output.
+          enum: [libmp3lame, pcm_mulaw, pcm_s16le]
+          default: libmp3lame
+        Temperature:
+          type: number
+          format: float
+          description: Sampling temperature, from 0.1 to 0.8.
+          default: 0.25
+    SynthesisTaskRequest:
+      type: object
+      required:
+        - Text
+        - VoiceId
+      properties:
+        Text:
+          type: string
+          description: The text to synthesize (up to 500,000 characters). May also be supplied as a list of strings.
+          example: This is a long-form test.
+        VoiceId:
+          type: string
+          description: The voice to use.
+          enum: [Scarlett, Dan, Liv, Will, Amy]
+          default: Scarlett
+        Bitrate:
+          type: string
+          description: Output audio bitrate.
+          enum: ['320k', '256k', '192k', '128k', '64k', '32k']
+          default: '192k'
+        Speed:
+          type: string
+          description: Playback speed adjustment, from -1.0 (slower) to 1.0 (faster).
+          default: '0'
+        Pitch:
+          type: string
+          description: Voice pitch, from 0.5 to 1.5.
+          default: '1'
+        TimestampType:
+          type: string
+          description: Granularity of the returned timestamps.
+          enum: [word, sentence]
+          default: sentence
+        CallbackUrl:
+          type: string
+          format: uri
+          description: Optional webhook URL that Unreal Speech posts task status updates to.
+    SynthesisTask:
+      type: object
+      properties:
+        TaskId:
+          type: string
+          description: Identifier for the synthesis task.
+        TaskStatus:
+          type: string
+          description: Current status of the task (for example scheduled, inProgress, completed, or failed).
+        OutputUri:
+          type: string
+          format: uri
+          description: URL to the synthesized MP3 audio file, present when the task is complete.
+        TimestampsUri:
+          type: string
+          format: uri
+          description: URL to the JSON timestamps file, present when the task is complete.
+        CreationTime:
+          type: string
+          description: When the task was created.
