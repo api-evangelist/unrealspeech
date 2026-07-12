@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/unrealspeech-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'API key issued from the Unreal Speech dashboard, sent as Authorization: Bearer
+    <API_KEY>.'
+  sources:
+  - openapi/unrealspeech-openapi.yml
