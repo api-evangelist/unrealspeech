@@ -93,6 +93,8 @@ apis:
     receive a TaskId, then poll the task to retrieve status and the output audio
     URI(s); supports an optional callback URL.
 common:
+- type: AgenticAccess
+  url: agentic-access/unrealspeech-agentic-access.yml
 - type: DomainSecurity
   url: security/unrealspeech-domain-security.yml
 - type: Authentication
