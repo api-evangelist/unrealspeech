@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Unreal Speech API
+  description: 'Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes a small REST surface: POST /stream for low-latency HTTP streaming of short text, POST /speech for synchronous MP3 output with word/sentence timestamps, and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous long-form audio. All requests are authenticated with a Bearer API key issued from the dashboard. Note: the base host carries a version segment that has advanced over time (the Python SDK references api.v6, the live reference documents api.v7); paths are stable across versions.'
+  version: v7
+  contact:
+    name: Unreal Speech
+    url: https://unrealspeech.com
+  termsOfService: https://unrealspeech.com/terms
+servers:
+- url: https://api.v7.unrealspeech.com
+  description: Unreal Speech API (documented current host)
+security:
+- bearerAuth: []
+tags:
+- name: Speech
+  description: Synchronous text-to-speech returning an MP3 and timestamp URLs.
+paths:
+  /speech:
+    post:
+      operationId: createSpeech
+      tags:
+      - Speech
+      summary: Synthesize speech (synchronous)
+      description: Converts up to 3,000 characters of text into speech and returns JSON containing an MP3 audio URL plus word- or sentence-level timestamp URLs. Use for medium-length, non-time-critical synthesis.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpeechRequest'
+      responses:
+        '200':
+          description: Synthesis result with audio and timestamp URLs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeechResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
+  schemas:
+    SpeechResponse:
+      type: object
+      properties:
+        OutputUri:
+          type: string
+          format: uri
+          description: URL to the synthesized MP3 audio file.
+        TimestampsUri:
+          type: string
+          format: uri
+          description: URL to the JSON timestamps file.
+    SpeechRequest:
+      type: object
+      required:
+      - Text
+      - VoiceId
+      properties:
+        Text:
+          type: string
+          description: The text to synthesize (up to 3,000 characters).
+          maxLength: 3000
+          example: This is a test.
+        VoiceId:
+          type: string
+          description: The voice to use.
+          enum:
+          - Scarlett
+          - Dan
+          - Liv
+          - Will
+          - Amy
+          default: Scarlett
+        Bitrate:
+          type: string
+          description: Output audio bitrate.
+          enum:
+          - 320k
+          - 256k
+          - 192k
+          - 128k
+          - 64k
+          - 32k
+          default: 192k
+        Speed:
+          type: string
+          description: Playback speed adjustment, from -1.0 (slower) to 1.0 (faster).
+          default: '0'
+        Pitch:
+          type: string
+          description: Voice pitch, from 0.5 to 1.5.
+          default: '1'
+        TimestampType:
+          type: string
+          description: Granularity of the returned timestamps.
+          enum:
+          - word
+          - sentence
+          default: sentence
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'API key issued from the Unreal Speech dashboard, sent as Authorization: Bearer <API_KEY>.'
