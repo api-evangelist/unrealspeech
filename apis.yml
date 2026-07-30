@@ -9,7 +9,20 @@ description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API fo
   tasks endpoint for long-form audio up to 500,000 characters. Requests are
   authenticated with a Bearer API key issued from the dashboard, and pricing is
   metered per character with a free monthly allowance.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/unrealspeech.png
 tags:
 - Text to Speech
 - TTS
@@ -23,75 +36,70 @@ specificationVersion: '0.19'
 apis:
 - aid: unrealspeech:unrealspeech-speech-api
   name: Unreal Speech Speech API
-  tags:
-  - Text to Speech
-  - Speech Synthesis
-  - Timestamps
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  description: Synchronous text-to-speech returning an MP3 and timestamp URLs.
   humanURL: https://docs.unrealspeech.com/reference/speech
   baseURL: https://api.v7.unrealspeech.com
+  tags:
+  - Speech
   properties:
-  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
-    type: Documentation
-  - url: https://docs.unrealspeech.com/reference/speech
-    type: APIReference
-  - url: openapi/unrealspeech-openapi.yml
-    type: OpenAPI
-  - url: collections/unrealspeech.postman_collection.json
-    type: PostmanCollection
-  - url: collections/unrealspeech.opencollection.json
-    type: OpenCollection
-  description: Synchronous text-to-speech for medium-length text (up to 3,000
-    characters). Returns an MP3 audio URL plus word- or sentence-level timestamp
-    URLs, with selectable voice, bitrate, speed, and pitch.
+  - type: OpenAPI
+    url: openapi/unrealspeech-speech-api-openapi.yml
+  - type: Documentation
+    url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/speech
+  - type: PostmanCollection
+    url: collections/unrealspeech.postman_collection.json
+  - type: OpenCollection
+    url: collections/unrealspeech.opencollection.json
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/stream
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/synthesistasks
 - aid: unrealspeech:unrealspeech-stream-api
   name: Unreal Speech Stream API
-  tags:
-  - Text to Speech
-  - Streaming
-  - Low Latency
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.unrealspeech.com/reference/stream
+  description: Low-latency HTTP streaming synthesis returning audio bytes.
+  humanURL: https://docs.unrealspeech.com/reference/speech
   baseURL: https://api.v7.unrealspeech.com
+  tags:
+  - Stream
   properties:
-  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
-    type: Documentation
-  - url: https://docs.unrealspeech.com/reference/stream
-    type: APIReference
-  - url: openapi/unrealspeech-openapi.yml
-    type: OpenAPI
-  - url: collections/unrealspeech.postman_collection.json
-    type: PostmanCollection
-  - url: collections/unrealspeech.opencollection.json
-    type: OpenCollection
-  description: Low-latency HTTP streaming synthesis for short text (up to 1,000
-    characters), returning audio bytes directly in the response - typically in
-    around 0.3 seconds - for time-sensitive uses like chatbots and voice agents.
-    This is HTTP chunked streaming, not a WebSocket.
+  - type: OpenAPI
+    url: openapi/unrealspeech-stream-api-openapi.yml
+  - type: Documentation
+    url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/speech
+  - type: PostmanCollection
+    url: collections/unrealspeech.postman_collection.json
+  - type: OpenCollection
+    url: collections/unrealspeech.opencollection.json
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/stream
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/synthesistasks
 - aid: unrealspeech:unrealspeech-synthesis-tasks-api
   name: Unreal Speech Synthesis Tasks API
-  tags:
-  - Text to Speech
-  - Async
-  - Long Form
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.unrealspeech.com/reference/synthesistasks
+  description: Asynchronous synthesis for long-form audio via submit-and-poll.
+  humanURL: https://docs.unrealspeech.com/reference/speech
   baseURL: https://api.v7.unrealspeech.com
+  tags:
+  - Synthesis Tasks
   properties:
-  - url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
-    type: Documentation
-  - url: https://docs.unrealspeech.com/reference/synthesistasks
-    type: APIReference
-  - url: openapi/unrealspeech-openapi.yml
-    type: OpenAPI
-  - url: collections/unrealspeech.postman_collection.json
-    type: PostmanCollection
-  - url: collections/unrealspeech.opencollection.json
-    type: OpenCollection
-  description: Asynchronous synthesis for long-form audio (up to 500,000
-    characters, e.g. audiobooks and articles). Submit text and immediately
-    receive a TaskId, then poll the task to retrieve status and the output audio
-    URI(s); supports an optional callback URL.
+  - type: OpenAPI
+    url: openapi/unrealspeech-synthesis-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.unrealspeech.com/reference/getting-started-with-our-api
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/speech
+  - type: PostmanCollection
+    url: collections/unrealspeech.postman_collection.json
+  - type: OpenCollection
+    url: collections/unrealspeech.opencollection.json
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/stream
+  - type: APIReference
+    url: https://docs.unrealspeech.com/reference/synthesistasks
 common:
 - type: AgenticAccess
   url: agentic-access/unrealspeech-agentic-access.yml
