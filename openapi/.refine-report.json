@@ -1,0 +1,18 @@
+{
+  "provider": "unrealspeech",
+  "sources": [
+    "unrealspeech-speech-api-openapi.yml",
+    "unrealspeech-stream-api-openapi.yml",
+    "unrealspeech-synthesis-tasks-api-openapi.yml"
+  ],
+  "outputs": [
+    "unrealspeech-speech-api-openapi.yml",
+    "unrealspeech-stream-api-openapi.yml",
+    "unrealspeech-synthesis-tasks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
