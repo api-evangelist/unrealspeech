@@ -1,0 +1,240 @@
+{
+  "item": [
+    {
+      "id": "3deb1f73-4ebb-4c13-8051-7a9daf71c1eb",
+      "name": "Stream",
+      "description": {
+        "content": "Low-latency HTTP streaming synthesis returning audio bytes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f5ee6aa-7537-4ddf-bdcd-126b14c678ae",
+          "name": "Stream synthesized audio (low latency)",
+          "request": {
+            "name": "Stream synthesized audio (low latency)",
+            "description": {
+              "content": "Converts up to 1,000 characters of text into speech and streams the audio bytes back in the HTTP response (chunked transfer), typically in around 0.3 seconds. Intended for time-sensitive uses such as chatbots and voice agents. This is HTTP response streaming, not a WebSocket.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "audio/mpeg"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Text\": \"<string>\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "71f3569e-fd25-49ec-b1fa-479056a66b6a",
+              "name": "Streamed audio content (chunked).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "audio/mpeg"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "chunked",
+                  "key": "Transfer-Encoding",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "audio/mpeg"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c782ab2-c83d-40e8-a138-4b23624ea29a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "82154c09-8211-4b48-83d0-343bc96cd8b9",
+              "name": "Too many requests - the per-plan request-rate limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"Codec\": \"libmp3lame\",\n  \"Temperature\": 0.25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.v7.unrealspeech.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "58d7d77b-c23c-40de-86f2-76081007e9a2",
+    "name": "Unreal Speech Stream API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes a small REST surface: POST /stream for low-latency HTTP streaming of short text, POST /speech for synchronous MP3 output with word/sentence timestamps, and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous long-form audio. All requests are authenticated with a Bearer API key issued from the dashboard. Note: the base host carries a version segment that has advanced over time (the Python SDK references api.v6, the live reference documents api.v7); paths are stable across versions.\n\nContact Support:\n Name: Unreal Speech",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,412 @@
+{
+  "item": [
+    {
+      "id": "4ba1bd40-a7dc-420f-85b9-a71d279f864e",
+      "name": "Synthesis Tasks",
+      "description": {
+        "content": "Asynchronous synthesis for long-form audio via submit-and-poll.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58527848-1e7b-4793-898b-eaa3319cbcb7",
+          "name": "Create an asynchronous synthesis task",
+          "request": {
+            "name": "Create an asynchronous synthesis task",
+            "description": {
+              "content": "Submits up to 500,000 characters of text for asynchronous synthesis and immediately returns a TaskId. Optimized for long-form audio such as audiobooks and articles. Provide an optional CallbackUrl to be notified of status changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "synthesisTasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Text\": \"<string>\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\",\n  \"CallbackUrl\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a58695fa-379d-424a-ab93-99483b1f8347",
+              "name": "The created synthesis task.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a long-form test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\",\n  \"CallbackUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"TaskId\": \"string\",\n  \"TaskStatus\": \"string\",\n  \"OutputUri\": \"https://gBtYtqS.vxHSeguy5P4MmcSKpZdSAVK0ihfS,0J8k2BX\",\n  \"TimestampsUri\": \"http://bauiKSBgsRsf.itdVRcR0a6Z2iJhZ-Znl3wwm4oT\",\n  \"CreationTime\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7fa77e1-20b4-4a2d-8c7d-f7dddbf96871",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a long-form test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\",\n  \"CallbackUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "415b5a29-d578-4fd4-a7ae-40dfb2b2c095",
+              "name": "Too many requests - the per-plan request-rate limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a long-form test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\",\n  \"CallbackUrl\": \"<uri>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ad26cc5-5b3c-4546-ba79-7d026160b457",
+          "name": "Get synthesis task status",
+          "request": {
+            "name": "Get synthesis task status",
+            "description": {
+              "content": "Polls the status of a previously submitted synthesis task by TaskId. Returns the current status and, when complete, the output audio URI(s).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "synthesisTasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "TaskId",
+                  "value": "<string>",
+                  "description": "(Required) The identifier returned when the task was created."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f976d5f0-1385-42ad-8017-0c51ed19fde6",
+              "name": "The synthesis task and its current status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "TaskId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"TaskId\": \"string\",\n  \"TaskStatus\": \"string\",\n  \"OutputUri\": \"https://gBtYtqS.vxHSeguy5P4MmcSKpZdSAVK0ihfS,0J8k2BX\",\n  \"TimestampsUri\": \"http://bauiKSBgsRsf.itdVRcR0a6Z2iJhZ-Znl3wwm4oT\",\n  \"CreationTime\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf863f12-0c92-458a-8240-656caa624890",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "TaskId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9b9ec88-0b14-44d4-9912-e46faca36512",
+              "name": "No task found for the supplied TaskId.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "synthesisTasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "TaskId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.v7.unrealspeech.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "689b049d-a38d-4099-ba46-a524b91f46ff",
+    "name": "Unreal Speech Synthesis Tasks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes a small REST surface: POST /stream for low-latency HTTP streaming of short text, POST /speech for synchronous MP3 output with word/sentence timestamps, and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous long-form audio. All requests are authenticated with a Bearer API key issued from the dashboard. Note: the base host carries a version segment that has advanced over time (the Python SDK references api.v6, the live reference documents api.v7); paths are stable across versions.\n\nContact Support:\n Name: Unreal Speech",
+      "type": "text/plain"
+    }
+  }
+}

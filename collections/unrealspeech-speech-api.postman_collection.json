@@ -1,0 +1,234 @@
+{
+  "item": [
+    {
+      "id": "235af521-7679-4531-a948-ee649089cd4b",
+      "name": "Speech",
+      "description": {
+        "content": "Synchronous text-to-speech returning an MP3 and timestamp URLs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cba92e30-6375-4e1e-9416-6c38a0a9601d",
+          "name": "Synthesize speech (synchronous)",
+          "request": {
+            "name": "Synthesize speech (synchronous)",
+            "description": {
+              "content": "Converts up to 3,000 characters of text into speech and returns JSON containing an MP3 audio URL plus word- or sentence-level timestamp URLs. Use for medium-length, non-time-critical synthesis.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "speech"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"Text\": \"<string>\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffded3d2-4236-4467-b18e-05917d360d55",
+              "name": "Synthesis result with audio and timestamp URLs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"OutputUri\": \"https://rckLksRTPJFSFeDH.oexVhvzIQp\",\n  \"TimestampsUri\": \"http://tfXedWIwjeRPkfcTpaoHNwfhWZQzkMA.dedSxAp9E2ZJ0tbBwTuTCIzyP\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "656a17b0-81f2-4774-a112-bb0623a3ae81",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c17ae96-3aa4-4a95-b271-80343a1641a0",
+              "name": "Too many requests - the per-plan request-rate limit was exceeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "speech"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"Text\": \"This is a test.\",\n  \"VoiceId\": \"Scarlett\",\n  \"Bitrate\": \"192k\",\n  \"Speed\": \"0\",\n  \"Pitch\": \"1\",\n  \"TimestampType\": \"sentence\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.v7.unrealspeech.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "771d4a05-8389-4373-8a3a-5351d082ccad",
+    "name": "Unreal Speech API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes a small REST surface: POST /stream for low-latency HTTP streaming of short text, POST /speech for synchronous MP3 output with word/sentence timestamps, and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous long-form audio. All requests are authenticated with a Bearer API key issued from the dashboard. Note: the base host carries a version segment that has advanced over time (the Python SDK references api.v6, the live reference documents api.v7); paths are stable across versions.\n\nContact Support:\n Name: Unreal Speech",
+      "type": "text/plain"
+    }
+  }
+}

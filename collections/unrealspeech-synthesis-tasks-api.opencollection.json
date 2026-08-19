@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unreal Speech Synthesis Tasks API",
+    "version": "v7"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Synthesis Tasks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get synthesis task status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.v7.unrealspeech.com/synthesisTasks",
+            "params": [
+              {
+                "name": "TaskId",
+                "value": "",
+                "type": "query",
+                "description": "The identifier returned when the task was created."
+              }
+            ]
+          },
+          "docs": "Polls the status of a previously submitted synthesis task by TaskId. Returns the current status and, when complete, the output audio URI(s)."
+        },
+        {
+          "info": {
+            "name": "Create an asynchronous synthesis task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v7.unrealspeech.com/synthesisTasks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits up to 500,000 characters of text for asynchronous synthesis and immediately returns a TaskId. Optimized for long-form audio such as audiobooks and articles. Provide an optional CallbackUrl to be notified of status changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

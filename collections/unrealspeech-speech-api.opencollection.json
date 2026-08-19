@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unreal Speech API",
+    "version": "v7"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Speech",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Synthesize speech (synchronous)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.v7.unrealspeech.com/speech",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Converts up to 3,000 characters of text into speech and returns JSON containing an MP3 audio URL plus word- or sentence-level timestamp URLs. Use for medium-length, non-time-critical synthesis."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
