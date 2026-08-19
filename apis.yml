@@ -32,7 +32,7 @@ tags:
 - AI
 created: '2026-07-11'
 modified: '2026-07-11'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: unrealspeech:unrealspeech-speech-api
   name: Unreal Speech Speech API
