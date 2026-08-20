@@ -24,6 +24,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/unrealspeech.png
 tags:
+- Text-to-Speech
+- TTS
+- Speech Synthesis
+- Audio
+- Voice
+- Artificial Intelligence
+tags_raw:
 - Text to Speech
 - TTS
 - Speech Synthesis
