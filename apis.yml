@@ -9,6 +9,18 @@ description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API fo
   tasks endpoint for long-form audio up to 500,000 characters. Requests are
   authenticated with a Bearer API key issued from the dashboard, and pricing is
   metered per character with a free monthly allowance.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
