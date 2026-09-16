@@ -2,13 +2,11 @@ aid: unrealspeech
 url: https://raw.githubusercontent.com/api-evangelist/unrealspeech/refs/heads/main/apis.yml
 name: Unreal Speech
 kind: company
-description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API for
-  turning text into natural-sounding speech. It exposes a small REST surface -
-  a low-latency HTTP streaming endpoint, a synchronous speech endpoint that returns
-  an MP3 plus per-word or per-sentence timestamps, and an asynchronous synthesis
-  tasks endpoint for long-form audio up to 500,000 characters. Requests are
-  authenticated with a Bearer API key issued from the dashboard, and pricing is
-  metered per character with a free monthly allowance.
+description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API for turning text into natural-sounding
+  speech. It exposes a small REST surface - a low-latency HTTP streaming endpoint, a synchronous speech
+  endpoint that returns an MP3 plus per-word or per-sentence timestamps, and an asynchronous synthesis
+  tasks endpoint for long-form audio up to 500,000 characters. Requests are authenticated with a Bearer
+  API key issued from the dashboard, and pricing is metered per character with a free monthly allowance.
 deliveryModel:
   model: saas
   open_source: false
@@ -50,11 +48,11 @@ tags_raw:
 - Voice
 - AI
 created: '2026-07-11'
-modified: '2026-07-11'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: unrealspeech:unrealspeech-speech-api
-  name: Unreal Speech Speech API
+  name: Unreal Speech API
   description: Synchronous text-to-speech returning an MP3 and timestamp URLs.
   humanURL: https://docs.unrealspeech.com/reference/speech
   baseURL: https://api.v7.unrealspeech.com
