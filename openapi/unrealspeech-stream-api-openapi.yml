@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Unreal Speech Stream API
-  description: 'Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API. It exposes a small REST surface: POST /stream for low-latency HTTP streaming of short text, POST /speech for synchronous MP3 output with word/sentence timestamps, and POST /synthesisTasks (with GET /synthesisTasks) for asynchronous long-form audio. All requests are authenticated with a Bearer API key issued from the dashboard. Note: the base host carries a version segment that has advanced over time (the Python SDK references api.v6, the live reference documents api.v7); paths are stable across versions.'
+  description: Unreal Speech is a low-cost, high-scale text-to-speech (TTS) API.
   version: v7
   contact:
     name: Unreal Speech
@@ -102,10 +102,10 @@ components:
           description: Sampling temperature, from 0.1 to 0.8.
           default: 0.25
   responses:
-    RateLimited:
-      description: Too many requests - the per-plan request-rate limit was exceeded.
     Unauthorized:
       description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
   securitySchemes:
     bearerAuth:
       type: http
