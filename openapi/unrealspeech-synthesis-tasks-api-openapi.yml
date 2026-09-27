@@ -66,6 +66,26 @@ paths:
           description: No task found for the supplied TaskId.
 components:
   schemas:
+    SynthesisTask:
+      type: object
+      properties:
+        TaskId:
+          type: string
+          description: Identifier for the synthesis task.
+        TaskStatus:
+          type: string
+          description: Current status of the task (for example scheduled, inProgress, completed, or failed).
+        OutputUri:
+          type: string
+          format: uri
+          description: URL to the synthesized MP3 audio file, present when the task is complete.
+        TimestampsUri:
+          type: string
+          format: uri
+          description: URL to the JSON timestamps file, present when the task is complete.
+        CreationTime:
+          type: string
+          description: When the task was created.
     SynthesisTaskRequest:
       type: object
       required:
@@ -116,31 +136,11 @@ components:
           type: string
           format: uri
           description: Optional webhook URL that Unreal Speech posts task status updates to.
-    SynthesisTask:
-      type: object
-      properties:
-        TaskId:
-          type: string
-          description: Identifier for the synthesis task.
-        TaskStatus:
-          type: string
-          description: Current status of the task (for example scheduled, inProgress, completed, or failed).
-        OutputUri:
-          type: string
-          format: uri
-          description: URL to the synthesized MP3 audio file, present when the task is complete.
-        TimestampsUri:
-          type: string
-          format: uri
-          description: URL to the JSON timestamps file, present when the task is complete.
-        CreationTime:
-          type: string
-          description: When the task was created.
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
     RateLimited:
       description: Too many requests - the per-plan request-rate limit was exceeded.
+    Unauthorized:
+      description: Missing or invalid API key.
   securitySchemes:
     bearerAuth:
       type: http
