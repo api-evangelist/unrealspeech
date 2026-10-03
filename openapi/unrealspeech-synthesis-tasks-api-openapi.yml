@@ -65,6 +65,11 @@ paths:
         '404':
           description: No task found for the supplied TaskId.
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
   schemas:
     SynthesisTask:
       type: object
@@ -136,11 +141,6 @@ components:
           type: string
           format: uri
           description: Optional webhook URL that Unreal Speech posts task status updates to.
-  responses:
-    RateLimited:
-      description: Too many requests - the per-plan request-rate limit was exceeded.
-    Unauthorized:
-      description: Missing or invalid API key.
   securitySchemes:
     bearerAuth:
       type: http

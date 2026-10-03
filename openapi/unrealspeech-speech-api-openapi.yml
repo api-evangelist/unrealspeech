@@ -42,17 +42,6 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
-    SpeechResponse:
-      type: object
-      properties:
-        OutputUri:
-          type: string
-          format: uri
-          description: URL to the synthesized MP3 audio file.
-        TimestampsUri:
-          type: string
-          format: uri
-          description: URL to the JSON timestamps file.
     SpeechRequest:
       type: object
       required:
@@ -100,11 +89,22 @@ components:
           - word
           - sentence
           default: sentence
+    SpeechResponse:
+      type: object
+      properties:
+        OutputUri:
+          type: string
+          format: uri
+          description: URL to the synthesized MP3 audio file.
+        TimestampsUri:
+          type: string
+          format: uri
+          description: URL to the JSON timestamps file.
   responses:
-    RateLimited:
-      description: Too many requests - the per-plan request-rate limit was exceeded.
     Unauthorized:
       description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
   securitySchemes:
     bearerAuth:
       type: http

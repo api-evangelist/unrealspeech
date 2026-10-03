@@ -48,10 +48,10 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   responses:
-    RateLimited:
-      description: Too many requests - the per-plan request-rate limit was exceeded.
     Unauthorized:
       description: Missing or invalid API key.
+    RateLimited:
+      description: Too many requests - the per-plan request-rate limit was exceeded.
   schemas:
     StreamRequest:
       type: object
