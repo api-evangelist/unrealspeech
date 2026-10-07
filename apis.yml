@@ -118,6 +118,8 @@ apis:
   - type: APIReference
     url: https://docs.unrealspeech.com/reference/synthesistasks
 common:
+- type: Pricing
+  url: https://unrealspeech.com/pricing
 - type: AgenticAccess
   url: agentic-access/unrealspeech-agentic-access.yml
 - type: DomainSecurity
